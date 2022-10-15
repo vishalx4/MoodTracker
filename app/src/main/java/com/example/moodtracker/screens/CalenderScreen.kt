@@ -26,15 +26,16 @@ import java.util.Date
 fun CalenderScreen() {
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Calender()
-        EventScreen()
+        val date = remember { mutableStateOf("Choose the date") }
+        Calender(date)
+        EventScreen(date = date.value)
     }
 }
 
 @Composable
-private fun Calender() {
+private fun Calender(date: MutableState<String>) {
 
-    var date by remember { mutableStateOf("Choose the date") }
+
     val context = LocalContext.current
 
     val calendar = Calendar.getInstance()
@@ -47,7 +48,7 @@ private fun Calender() {
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, year: Int, month: Int, day: Int ->
-            date = "$day-${month + 1}-$year"
+            date.value = "$day-${month + 1}-$year"
         }, year, month, day
     )
 
@@ -68,7 +69,7 @@ private fun Calender() {
         ) {
             val (lable, iconView) = createRefs()
             Text(
-                text= date,
+                text= date.value,
                 color = MaterialTheme.colors.onSurface,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -38,31 +38,43 @@ fun ProfileScreen() {
                 Text(text = "User Name")
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                focusedLabelColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
             ),
         )
 
         TextField(
             modifier = Modifier,
-            value = "Sarah Wallace",
+            value = "This is About",
             onValueChange = {},
             label = {
                 Text(text = "About")
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                focusedLabelColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
             ),
         )
 
         TextField(
             modifier = Modifier,
-            value = "Sarah Wallace",
+            value = "sarach.wallace@gmail.com",
             onValueChange = {},
             label = {
                 Text(text = "Email")
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = Color.Transparent,
+                focusedLabelColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
             ),
         )
     }

@@ -1,6 +1,5 @@
 package com.example.moodtracker.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -20,22 +20,16 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.example.moodtracker.DBHelper
 import com.example.moodtracker.R
 import com.example.moodtracker.data.Event
 import com.example.moodtracker.data.Mood
 
 @Composable
-fun EventScreen() {
-    val eventList = remember { mutableListOf<Event>() }
+fun EventScreen(date: String) {
+    val dbHelper = DBHelper(LocalContext.current)
     var dialogState by remember { mutableStateOf(false) }
-
-    Log.d("vishal", "EventScreen: $dialogState")
-
-    for( i in 1..5) {
-        eventList.add(Event("vishal" , Mood.HAPPY))
-    }
-
-    Log.d("vishal", "EventScreen: $eventList")
+    val eventList = dbHelper.fetchEventsFromDate(date)
 
     if (eventList.isEmpty()) {
         EmptyEvent(
@@ -47,13 +41,15 @@ fun EventScreen() {
 
     if (dialogState) {
         AddEvent(
+            date = date,
+            dbHelper = dbHelper,
             closeDialog = { dialogState = false }
         )
     }
 }
 
 @Composable
-fun ShowList(list: MutableList<Event>, openDialog: () -> Unit) {
+fun ShowList(list: List<Event>, openDialog: () -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
 
         Image(
@@ -63,7 +59,8 @@ fun ShowList(list: MutableList<Event>, openDialog: () -> Unit) {
                 .size(60.dp, 60.dp)
                 .clickable { openDialog.invoke() },
             painter = painterResource(id = R.drawable.add),
-            contentDescription = "add event" )
+            contentDescription = "add event"
+        )
 
 
         Column(
@@ -154,14 +151,15 @@ fun EmptyEvent( openDialog: () -> Unit ) {
     }
 }
 
-
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AddEvent(closeDialog: () -> Unit) {
-
+fun AddEvent(
+    date: String,
+    dbHelper: DBHelper,
+    closeDialog: () -> Unit
+) {
     val moodList: List<Mood> = listOf(Mood.HAPPY, Mood.SAD, Mood.ANGRY)
     var eventName by remember { mutableStateOf("") }
-    val selectedMood = remember { mutableStateOf(0) }
+    val selectedMood = remember { mutableStateOf(-1) }
 
     Dialog(
         onDismissRequest = { closeDialog.invoke() },
@@ -187,11 +185,11 @@ fun AddEvent(closeDialog: () -> Unit) {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     for (i in moodList.indices) {
-                        if (selectedMood.value == i+1) {
+                        if (selectedMood.value == i) {
                             Image(
                                 modifier = Modifier.padding(10.dp)
                                     .background(Color.Green)
-                                    .clickable { selectedMood.value = i+1 },
+                                    .clickable { selectedMood.value = i },
                                 imageVector = ImageVector.vectorResource(id = getImageVectorFromMood(
                                     moodList[i]
                                 )),
@@ -200,7 +198,7 @@ fun AddEvent(closeDialog: () -> Unit) {
                         } else {
                             Image(
                                 modifier = Modifier.padding(10.dp)
-                                    .clickable { selectedMood.value = i+1 },
+                                    .clickable { selectedMood.value = i },
                                 imageVector = ImageVector.vectorResource(id = getImageVectorFromMood(
                                     moodList[i]
                                 )),
@@ -213,7 +211,13 @@ fun AddEvent(closeDialog: () -> Unit) {
                 Column(modifier = Modifier.fillMaxWidth()) {
 
                     Button(
-                        onClick = { closeDialog.invoke() }
+                        onClick = {
+                            dbHelper.addEvent(
+                                date = date,
+                                event = Event(eventName, Mood.values()[selectedMood.value])
+                            )
+                            closeDialog.invoke()
+                        }
                     ) {
                         Text(text = "ADD")
                     }
