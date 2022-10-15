@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.moodtracker.ProfileScreen
 import com.example.moodtracker.screens.CalenderScreen
+import com.example.moodtracker.screens.MoodAnalysis
 
 @Composable
 fun NavHostContainer(
@@ -32,9 +33,7 @@ fun NavHostContainer(
             }
 
             composable("analysis") {
-                Column(Modifier.fillMaxSize()) {
-                    Text(text = "Analysis")
-                }
+                MoodAnalysis()
             }
         })
 

@@ -28,7 +28,14 @@ fun CalenderScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
         val date = remember { mutableStateOf("Choose the date") }
         Calender(date)
-        EventScreen(date = date.value)
+
+        if (date.value == "Choose the date") {
+            Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Please Choose The Date First")
+            }
+        } else {
+            EventScreen(date = date.value)
+        }
     }
 }
 

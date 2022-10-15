@@ -27,7 +27,7 @@ fun MoodTrackerNavBar(
         BottomNavItem(screen = Screens.CALENDER, icon = R.drawable.calender, route = "calender"),
         BottomNavItem(screen = Screens.PROFILE, icon = R.drawable.profile, route = "profile"),
     )
-    val selected = remember { mutableStateOf(0) }
+    val selected = remember { mutableStateOf(1) }
     BottomNavigation(
         modifier = modifier.padding(horizontal = 40.dp, vertical = 20.dp),
         backgroundColor = Color.Transparent,

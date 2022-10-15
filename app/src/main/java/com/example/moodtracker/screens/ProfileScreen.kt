@@ -34,6 +34,7 @@ fun ProfileScreen() {
             modifier = Modifier,
             value = "Sarah Wallace", 
             onValueChange = {},
+            readOnly = true,
             label = {
                 Text(text = "User Name")
             },
@@ -50,6 +51,7 @@ fun ProfileScreen() {
             modifier = Modifier,
             value = "This is About",
             onValueChange = {},
+            readOnly = true,
             label = {
                 Text(text = "About")
             },
