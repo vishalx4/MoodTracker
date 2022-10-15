@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.moodtracker.R
+import com.example.moodtracker.ui.theme.Purple200
 import java.util.Calendar
 import java.util.Date
 
@@ -64,7 +67,7 @@ private fun Calender(date: MutableState<String>) {
             .fillMaxWidth()
             .wrapContentSize(Alignment.TopStart)
             .padding(all = 10.dp)
-            .border(0.5.dp, MaterialTheme.colors.onSurface.copy(alpha = 0.5f))
+            .border(2.dp, Purple200)
             .clickable {
                 datePickerDialog.show()
             }
@@ -88,16 +91,17 @@ private fun Calender(date: MutableState<String>) {
                         width = Dimension.fillToConstraints
                     }
             )
-            Image(
+            Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.calender),
-                contentDescription = "calender icon",
+                contentDescription ="calender icon",
                 modifier = Modifier
-                    .size(20.dp, 20.dp)
+                    .size(40.dp, 40.dp)
                     .constrainAs(iconView) {
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
-                    }
+                    },
+                tint = LocalContentColor.current
             )
         }
     }

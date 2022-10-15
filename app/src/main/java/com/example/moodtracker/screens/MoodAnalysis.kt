@@ -165,9 +165,7 @@ fun PieChart(
         modifier = Modifier
             .size(size = size)
     ) {
-
         var startAngle = -90f
-
         for (i in sweepAngles.indices) {
             drawArc(
                 color = colors[i],
@@ -184,14 +182,14 @@ fun PieChart(
 
     Column {
         for (i in values.indices) {
-            DisplayLegend1(color = colors[i], legend = legend[i])
+            DisplayMoodTypes(color = colors[i], legend = legend[i])
         }
     }
 
 }
 
 @Composable
-fun DisplayLegend1(color: Color, legend: String) {
+fun DisplayMoodTypes(color: Color, legend: String) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -205,9 +203,6 @@ fun DisplayLegend1(color: Color, legend: String) {
 
         Spacer(modifier = Modifier.width(4.dp))
 
-        Text(
-            text = legend,
-            color = Color.Black
-        )
+        Text(text = legend)
     }
 }

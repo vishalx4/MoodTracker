@@ -32,7 +32,7 @@ fun ProfileScreen() {
 
         TextField(
             modifier = Modifier,
-            value = "Sarah Wallace", 
+            value = "Ankita Mankar",
             onValueChange = {},
             readOnly = true,
             label = {
@@ -49,7 +49,7 @@ fun ProfileScreen() {
 
         TextField(
             modifier = Modifier,
-            value = "This is About",
+            value = "This App Is Made with <3",
             onValueChange = {},
             readOnly = true,
             label = {

@@ -2,6 +2,7 @@ package com.example.moodtracker.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +25,8 @@ import com.example.moodtracker.DBHelper
 import com.example.moodtracker.R
 import com.example.moodtracker.data.Event
 import com.example.moodtracker.data.Mood
+import com.example.moodtracker.ui.theme.Purple200
+import com.example.moodtracker.ui.theme.Purple500
 
 @Composable
 fun EventScreen(date: String) {
@@ -93,7 +96,10 @@ fun EventItem(event: Event) {
 
     Card(modifier = Modifier
         .fillMaxSize()
-        .padding(20.dp)) {
+        .padding(20.dp)
+        .border(3.dp, Purple200)
+    ) {
+
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -113,16 +119,18 @@ fun EventItem(event: Event) {
                         width = Dimension.fillToConstraints
                     }
             )
-            Image(
+
+            Icon(
                 imageVector = imageVector,
-                contentDescription = "calender icon",
+                contentDescription ="calender icon",
                 modifier = Modifier
                     .size(40.dp, 40.dp)
                     .constrainAs(iconView) {
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
-                    }
+                    },
+                tint = LocalContentColor.current
             )
         }
     }
@@ -171,7 +179,8 @@ fun AddEvent(
 
         Surface() {
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(10.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -186,23 +195,26 @@ fun AddEvent(
                 ) {
                     for (i in moodList.indices) {
                         if (selectedMood.value == i) {
-                            Image(
-                                modifier = Modifier.padding(10.dp)
-                                    .background(Color.Green)
+                            Icon(
+                                modifier = Modifier
+                                    .padding(10.dp)
                                     .clickable { selectedMood.value = i },
-                                imageVector = ImageVector.vectorResource(id = getImageVectorFromMood(
+                                imageVector =  ImageVector.vectorResource(id = getImageVectorFromMood(
                                     moodList[i]
                                 )),
-                                contentDescription = "icon"
+                                contentDescription ="calender icon",
+                                tint = Color.Green
                             )
                         } else {
-                            Image(
-                                modifier = Modifier.padding(10.dp)
+                            Icon(
+                                modifier = Modifier
+                                    .padding(10.dp)
                                     .clickable { selectedMood.value = i },
-                                imageVector = ImageVector.vectorResource(id = getImageVectorFromMood(
+                                imageVector =  ImageVector.vectorResource(id = getImageVectorFromMood(
                                     moodList[i]
                                 )),
-                                contentDescription = "icon"
+                                contentDescription ="calender icon",
+                                tint = LocalContentColor.current
                             )
                         }
                     }

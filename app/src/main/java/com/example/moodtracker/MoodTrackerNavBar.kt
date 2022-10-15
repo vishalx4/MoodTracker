@@ -13,9 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.moodtracker.ui.theme.Purple200
+import com.example.moodtracker.ui.theme.Purple500
 
 @Composable
 fun MoodTrackerNavBar(
@@ -28,6 +32,7 @@ fun MoodTrackerNavBar(
         BottomNavItem(screen = Screens.PROFILE, icon = R.drawable.profile, route = "profile"),
     )
     val selected = remember { mutableStateOf(1) }
+    val haptic = LocalHapticFeedback.current
     BottomNavigation(
         modifier = modifier.padding(horizontal = 40.dp, vertical = 20.dp),
         backgroundColor = Color.Transparent,
@@ -37,6 +42,7 @@ fun MoodTrackerNavBar(
             BottomNavigationItem(
                 selected = selected.value == screens.indexOf(it),
                 onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     selected.value = screens.indexOf(it)
                     navController.navigate(it.route)
                 },
@@ -51,7 +57,7 @@ fun MoodTrackerNavBar(
                                 }
                             )
                             .clip(CircleShape)
-                            .background(Color.Cyan)
+                            .background(Purple200)
                     ) {
                         Icon(
                             modifier = Modifier
@@ -69,7 +75,7 @@ fun MoodTrackerNavBar(
                             tint = if (selected.value == screens.indexOf(it)) {
                                 Color.Black
                             } else {
-                                Color.Gray
+                                Color.White
                             }
                         )
                     }
